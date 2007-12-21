@@ -14,6 +14,7 @@ Patch0: %name.makefile.patch
 License: GPL
 Group: System/Servers
 Url: http://tcron.sourceforge.net/
+BuildRoot: %{_tmppath}/%{name}-buildroot
 Requires(post): rpm-helper
 Requires(preun): rpm-helper
 Requires(pre): coreutils
