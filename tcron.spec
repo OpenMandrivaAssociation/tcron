@@ -1,5 +1,5 @@
 %define name tcron
-%define version 0.5.2
+%define version 0.5.3
 %define release %mkrel 1
 
 %define major 0
@@ -11,6 +11,7 @@ Version: %{version}
 Release: %{release}
 Source0: %{name}-%{version}.tar.bz2
 Patch0: %name.makefile.patch
+Patch1: tcron-check-dev_rtc.patch
 License: GPL
 Group: System/Servers
 Url: http://tcron.sourceforge.net/
@@ -54,6 +55,7 @@ tcron library.
 %prep
 %setup -q
 %patch0 -p0 -b .orig
+%patch1 -p0 -b .devrtc
 
 %build
 %make prefix=%_prefix TCRONTAB_AP_LIB=%_libdir 
@@ -69,6 +71,8 @@ mv  %buildroot/%_sysconfdir/init.d/tcrond %buildroot/%_initrddir/tcrond
 cd %buildroot%_libdir
 ln -s libtcrontab-api.so.%{major} libtcrontab-api.so
 )
+
+mkdir -p %buildroot%{_var}/spool/tcron
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -98,6 +102,7 @@ fi
 %_initrddir/tcrond
 %config(noreplace) %_sysconfdir/tcron.conf
 %_libdir/tcrontab-ap
+%{_var}/spool/tcron
 
 %files -n %libname
 %defattr(-,root,root)
