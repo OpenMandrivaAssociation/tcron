@@ -1,9 +1,10 @@
 %define name tcron
 %define version 0.5.3
-%define release %mkrel 1
+%define release %mkrel 2
 
 %define major 0
 %define libname %mklibname %name %major
+%define libnamedevel %mklibname %name
 
 Summary: Another cron daemon
 Name: %{name}
@@ -37,14 +38,14 @@ and off any number of times per day.
 
 This package contains the tcron common library.
 
-%package -n %libname-devel
+%package -n %libnamedevel
 Summary: The development files from tcron
 Group: Development/Other
-Provides: lib%name-devel = %version-%release
+Obsoletes: %_lib%{name}0-devel
 Provides: %name-devel = %version-%release
 Requires: %libname = %version-%release
 
-%description -n %libname-devel
+%description -n %libnamedevel
 Tcron integrates 'cron' with the ATX power-up capability.
 It can invoke multiple cron jobs and switch the computer on
 and off any number of times per day.
@@ -109,11 +110,9 @@ fi
 %doc README Changelog
 %_libdir/*.so.*
 
-%files -n %libname-devel
+%files -n %libnamedevel
 %defattr(-,root,root)
 %doc README README.api Changelog demo
 %_libdir/*.so
 %_libdir/*.a
 %_includedir/*.h
-
-
