@@ -1,6 +1,6 @@
 %define name tcron
 %define version 0.5.3
-%define release %mkrel 5
+%define release %mkrel 6
 
 %define major 0
 %define libname %mklibname %name %major
