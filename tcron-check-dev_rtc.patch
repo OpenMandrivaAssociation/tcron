@@ -1,0 +1,24 @@
+Tcrond allways perform a "modprobe rtc", but can failed when rtc
+is builtin in kernel, and not compiled as module.
+This patch make tcron performing the modprobe only if /dev/rtc doesn't
+exists.
+Index: tcrond.c
+===================================================================
+--- tcrond.c
++++ tcrond.c	2008-01-06 00:12:15.170031714 +0100
+@@ -261,12 +261,14 @@
+   FILE *fp;
+   int fd;
+   char *boot_str;
++  struct stat st;
+ 
+ #if 0
+   dbg("=== tcron ver %s ===\n",VERSION);
+ #endif
+ 
+-  system("modprobe rtc");
++  if (stat(DEV_RTC, &st))
++    system("modprobe rtc");
+ 
+   if ((fd=open(pidfile,O_RDONLY))>0) {
+     if (flock(fd,LOCK_NB|LOCK_EX) < 0)

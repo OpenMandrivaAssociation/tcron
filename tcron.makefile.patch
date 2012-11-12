@@ -1,0 +1,73 @@
+Index: Makefile
+===================================================================
+--- Makefile
++++ Makefile	2007-01-14 18:26:09.976944257 +0100
+@@ -1,5 +1,9 @@
+ include config.mak
+ 
++DESTDIR =
++TCRONTAB_AP_LIB = $(PREFIX)/lib
++LIBVERSION = .0
++
+ OBJSTCRONTAB = tcrontab.o parse.o util.o spoolfile.o
+ OBJSTCRONTAB_AP = tcrontab-ap.o parse.o util.o spoolfile.o tcrontab-ap-pr.o
+ OBJSTCR =  tcrond.o parse.o sys-stat.o util.o ucron.o
+@@ -18,7 +22,7 @@
+ sbindir=$(prefix)/sbin
+ TCRONTAB_AP_LIB = $(libdir)
+ 
+-all:    $(PROGRAMS) libtcrontab-api.so libtcrontab-api.a
++all:    $(PROGRAMS) libtcrontab-api.so$(LIBVERSION) libtcrontab-api.a
+ CFLAGS = $(OFLAGS) -I. -DVERSION=\"$(VERSION)\" \
+ 	-DSYS_CRON_SPOOL=\"$(SYS_CRON_SPOOL)\" \
+ 	-DTCRONTAB_AP_LIB=\"$(TCRONTAB_AP_LIB)\" \
+@@ -29,7 +33,7 @@
+ tcrontab-ap:    $(OBJSTCRONTAB_AP)
+ 	$(CC) $(OBJSTCRONTAB_AP) -o $@
+ 
+-libtcrontab-api.so:     $(TCRONTAB_API_SRC)
++libtcrontab-api.so$(LIBVERSION):     $(TCRONTAB_API_SRC)
+ 	$(CC) $(CFLAGS) -fpic -shared $(TCRONTAB_API_SRC) -o $@
+ 
+ libtcrontab-api.a: $(TCRONTAB_API_SRC)
+@@ -46,25 +50,22 @@
+ #	$(CC) -o $@ $(OBJSTAT)
+ 
+ install: $(PROGRAMS)
+-	install -d $(sbindir)
+-	install -m 555 -s tcrond $(sbindir)
+-	install -d $(bindir)
+-	install -m 555 -s idle-halt $(bindir)
+-	install -m 4555 -s tcrontab $(bindir)
+-	install -d $(sysconfdir)/init.d
+-	install -m 644 tcron.conf $(sysconfdir)
+-	install -d $(TCRONTAB_AP_LIB)
+-	install -m 4755 tcrontab-ap $(TCRONTAB_AP_LIB)
+-	install tcrond.init $(sysconfdir)/init.d/tcrond
+-	install -m 755 libtcrontab-api.so $(TCRONTAB_AP_LIB)
+-	install -m 644 libtcrontab-api.a $(TCRONTAB_AP_LIB)
+-	install -d $(includedir)
+-	install -m 644 tcron.h $(includedir)
++	install -d $(DESTDIR)$(sbindir)
++	install -m 555 -s tcrond $(DESTDIR)$(sbindir)
++	install -d $(DESTDIR)$(bindir)
++	install -m 555 -s idle-halt $(DESTDIR)$(bindir)
++	install -m 4555 -s tcrontab $(DESTDIR)$(bindir)
++	install -d $(DESTDIR)$(sysconfdir)/init.d
++	install -m 644 tcron.conf $(DESTDIR)$(sysconfdir)
++	install -d $(DESTDIR)$(TCRONTAB_AP_LIB)
++	install -m 4755 tcrontab-ap $(DESTDIR)$(TCRONTAB_AP_LIB)
++	install tcrond.init $(DESTDIR)$(sysconfdir)/init.d/tcrond
++	install -m 755 libtcrontab-api.so$(LIBVERSION) $(DESTDIR)$(TCRONTAB_AP_LIB)
++	install -m 644 libtcrontab-api.a $(DESTDIR)$(TCRONTAB_AP_LIB)
++	install -d $(DESTDIR)$(includedir)
++	install -m 644 tcron.h $(DESTDIR)$(includedir)
+ 	if [ $(prefix) = /usr/local ]; then \
+-	  chkconfig --add tcrond; \
+-	  if [ ! -d $(SYS_CRON_SPOOL) ]; then  mkdir $(SYS_CRON_SPOOL); fi; \
+-	  ldconfig; \
+-	  service tcrond restart; \
++	  if [ ! -d $(DESTDIR)$(SYS_CRON_SPOOL) ]; then  mkdir -p $(DESTDIR)$(SYS_CRON_SPOOL); fi; \
+ 	fi
+ SRCDIR = tcron-$(VERSION)
+ 
