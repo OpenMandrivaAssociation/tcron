@@ -120,3 +120,55 @@ fi
 %_libdir/*.so
 %_libdir/*.a
 %_includedir/*.h
+
+
+%changelog
+* Wed Sep 09 2009 Thierry Vignaud <tvignaud@mandriva.com> 0.5.3-6mdv2010.0
++ Revision: 434313
+- rebuild
+
+* Sat Aug 02 2008 Thierry Vignaud <tvignaud@mandriva.com> 0.5.3-5mdv2009.0
++ Revision: 261456
+- rebuild
+
+* Wed Jul 30 2008 Thierry Vignaud <tvignaud@mandriva.com> 0.5.3-4mdv2009.0
++ Revision: 254269
+- rebuild
+
+  + Pixel <pixel@mandriva.com>
+    - do not call ldconfig in %%post/%%postun, it is now handled by filetriggers
+
+* Sun Jan 06 2008 Olivier Thauvin <nanardon@mandriva.org> 0.5.3-2mdv2008.1
++ Revision: 145981
+- new devel policy
+
+* Sun Jan 06 2008 Olivier Thauvin <nanardon@mandriva.org> 0.5.3-1mdv2008.1
++ Revision: 145874
+- patch1: try to load rtc module only if /dev/rtc is missing (#36500)
+- provide /var/spool/tcron (#36500 too)
+- 0.5.3
+
+* Fri Dec 21 2007 Olivier Blin <oblin@mandriva.com> 0.5.2-1mdv2008.1
++ Revision: 136535
+- restore BuildRoot
+
+  + Thierry Vignaud <tvignaud@mandriva.com>
+    - kill re-definition of %%buildroot on Pixel's request
+
+
+* Sun Jan 14 2007 Olivier Thauvin <nanardon@mandriva.org> 0.5.2-1mdv2007.0
++ Revision: 108850
+- 0.5.2
+- fix service in post
+- Import tcron
+
+* Tue Sep 06 2005 Olivier Thauvin <nanardon@mandriva.org> 0.5.0-1mdk
+- 0.5.0
+- fix #18246
+
+* Thu Jul 08 2004 Olivier Thauvin <thauvin@aerov.jussieu.fr> 0.4.7-1mdk
+- 0.4.7
+
+* Wed Jan 14 2004 Olivier Thauvin <nanardon@klama.mandrake.org> 0.4.5-1mdk
+- 0.4.5
+
