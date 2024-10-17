@@ -15,7 +15,7 @@ Patch0: %name.makefile.patch
 Patch1: tcron-check-dev_rtc.patch
 License: GPL
 Group: System/Servers
-Url: http://tcron.sourceforge.net/
+Url: https://tcron.sourceforge.net/
 BuildRoot: %{_tmppath}/%{name}-buildroot
 Requires(post): rpm-helper
 Requires(preun): rpm-helper
